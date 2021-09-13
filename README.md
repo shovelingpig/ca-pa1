@@ -66,7 +66,7 @@ Putting it all together, the final encoded value for the 8-bit input `0x00` beco
 
 ### Example
 
-Let's see an example. Assume that we want to encodes the string `The quick brown fox` using our simplified run-length encoding scheme. Each character in the text string in C is represented as 8-bit unsigned integer according the [ASCII](https://en.wikipedia.org/wiki/ASCII) standard. The following shows the actual values (in hexadecimal) to represent the given string.
+Let's see an example. Assume that we want to encode the string `The quick brown fox` using our simplified run-length encoding scheme. Each character in the text string in C is represented as 8-bit unsigned integer according the [ASCII](https://en.wikipedia.org/wiki/ASCII) standard. The following shows the actual values (in hexadecimal) to represent the given string.
 
 ```
 T  h  e     q  u  i  c  k   
