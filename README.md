@@ -22,9 +22,9 @@ In memory, every data is represented as a sequence of binary digits. Therefore, 
 
 2. And then find the next run with all 1's in the input. Again, if the length is less than 7, emit the three bits that denote the length of the  run.
 
-3. Basicaly, step 1 and 2 are repeated until the end of the input.
+3. Basically, step 1 and 2 are repeated until the end of the input.
 
-4. If the length of the run is longer than 7 in step 1 or 2, it should be represented as a series of full runs (i.e., the run with the length 7) except for the last run. For example, the run `00000000` is represented as `0000000` + `0` where there is no run with 1's between them, leading to the following encoding result. 
+4. If the length of the run is longer than 7 in step 1 or 2, it should be represented as a series of full runs (i.e., the run with the length 7) except for the last run. For example, the run `00000000` is represented as `0000000` + `0` where there is no run with 1's between them, leading to the following encoding result. (In this case, please note that any other combinations such as `0000` + `000` are not allowed.)
 
 ```
 111 000 001 
@@ -35,9 +35,9 @@ In memory, every data is represented as a sequence of binary digits. Therefore, 
  the length of the first run with all 0's (7)
 ```
 
-In this case, please note that any other combinations such as `0000` + `000` are not allowed. 
 
-5. If the total number of output bits are not a multiple of 8 after encoding, we pad 0's until it becomes a multiple of 8. This is because a byte is the smallest unit that can be stored in memory. Hence, the output has the following format:
+
+5. If the total number of output bits is not a multiple of 8 after encoding, we pad 0's until it becomes a multiple of 8. This is because a byte is the smallest unit that can be stored in memory. Hence, the output has the following format:
 
 ```
 | AAA BBB CCC DDD  ...         |  Padding  |
@@ -134,7 +134,7 @@ T             h           e             []        q
           o           x         []   
 11 00 11 00 11 0 1111 0 1111 00000 1 00000
 => 010 010 010 010 010 001 100 001 100 101 001 110
-=> 0 10010010 01001000 11000011 00101001 11000000
+=> 0 10010010 01001000 11000011 00101001 11000000 (5 bits padded)
      0x92     0x48     0xc3     0x29     0xc0
 ```
 
@@ -142,7 +142,7 @@ T             h           e             []        q
 ## Problem specification
 
 ### 1. encode()
-)
+
 Write the C function named `encode()` that encodes the input binary data using our run-length encoding scheme. The prototype of `encode()` is as follows:
 
 ```
@@ -151,7 +151,7 @@ int encode(const char* const src, const int srclen, char* const dst, const int d
 
 The first argument `src` points to the memory address of the input data. The length of the input data (in bytes) is specified in the second argument `srclen`. The encoded result should be stored starting from the address pointed to by ``dst``. Finally, the `dstlen` argument indicates the number of bytes allocated for the result by the caller.
 
-The function `encode()` returns the actual length of the output in bytes including the encoded data and padded bits. If the size of the output exceeds the `dstlen`, it should return -1 and the contents of the output is ignored. When the `srclen` is zero, `encode()` returns zero. In any case, the contents of the memory outside of the allocated buffer should not be corrupted.
+The function `encode()` returns the actual length of the output in bytes including the encoded data and padded bits. If the size of the output exceeds the `dstlen`, it should return -1 and the contents of the output is ignored. When `srclen` is zero, `encode()` returns zero. In any case, the contents of the memory outside of the allocated buffer should not be corrupted.
 
 ### 2. decode()
 
@@ -163,7 +163,7 @@ int decode(const char* const src, const int srclen, char* const dst, const int d
 
 The first argument `src` points to the memory address of the input encoded data. The length of the input data (in bytes) is specified in the second argument `srclen`. The decoded (original) data should be stored starting from the address pointed to by `dst`. Finally, the `dstlen` argument indicates the number of bytes allocated for the result by the caller.
 
-The function `decode()` returns the actual length of the output in bytes. If the size of the output exceeds the `dstlen`, it should return -1 and the contents of the output is ignored. When the `srclen` is zero, `decode()` returns zero. In any case, the contents of the memory outside of the allocated buffer should not be corrupted.
+The function `decode()` returns the actual length of the output in bytes. If the size of the output exceeds the `dstlen`, it should return -1 and the contents of the output is ignored. When `srclen` is zero, `decode()` returns zero. In any case, the contents of the memory outside of the allocated buffer should not be corrupted.
 
 
 ## Skeleton code
