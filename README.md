@@ -18,13 +18,13 @@ Run-length encoding (RLE) is a form of lossless data compression in which runs o
 
 In memory, every data is represented as a sequence of binary digits. Therefore, we just count those runs that consist of all 0's or all 1's. Because we have only two kinds of runs, we do not store the data value. Instead, we repeatedly store the length of the run with all 0's and then that with all 1's. We allocate three bits to represent the length of each run. Our simplified run-length encoding works as follows.
 
-1. First, find a run with all 0's in the input. If the length is less than 7, emit the three bits that correspond to the length of the run.
+1. First, find a run with all 0's in the input. If the length is less than 8, emit the three bits that correspond to the length of the run.
 
-2. And then find the next run with all 1's in the input. Again, if the length is less than 7, emit the three bits that denote the length of the  run.
+2. And then find the next run with all 1's in the input. Again, if the length is less than 8, emit the three bits that denote the length of the  run.
 
 3. Basically, step 1 and 2 are repeated until the end of the input.
 
-4. If the length of the run is longer than 7 in step 1 or 2, it should be represented as a series of full runs (i.e., the run with the length 7) except for the last run. For example, the run `00000000` is represented as `0000000` + `0` where there is no run with 1's between them, leading to the following encoding result. (In this case, please note that any other combinations such as `0000` + `000` are not allowed.)
+4. If the length of the run is longer than 7 in step 1 or 2, it should be represented as a series of full runs (i.e., the run with the length 7) except for the last run. For example, the run `00000000` is represented as `0000000` + `0` where there is no run with 1's between them. This leads to the following encoding result. (In this case, please note that any other combinations such as `0000` + `000` are not allowed.)
 
 ```
 111 000 001 
@@ -58,7 +58,7 @@ Putting it all together, the final encoded value for the 8-bit input `0x00` beco
 111 000 001 0000000   == 0xe0 0x80
  ^   ^   ^  ^^^^^^^
  |   |   |     |
- |   |   |    pads (to make the output 8*n bits)
+ |   |   |    padding (to make the output 8*n bits)
  |   |   the length of the next run with all 0's (1)
  |   the length of the next run with all 1's (0)
  the length of the first run with all 0's (7)
@@ -66,7 +66,7 @@ Putting it all together, the final encoded value for the 8-bit input `0x00` beco
 
 ### Example
 
-Let's see an example. Assume that we want to encode the string `The quick brown fox` using our simplified run-length encoding scheme. Each character in the text string in C is represented as 8-bit unsigned integer according the [ASCII](https://en.wikipedia.org/wiki/ASCII) standard. The following shows the actual values (in hexadecimal) to represent the given string.
+Let's see an example. Assume that we want to encode the string `The quick brown fox` using our simplified run-length encoding scheme. Each character in the text string in C is represented as 8-bit unsigned integer according to the [ASCII](https://en.wikipedia.org/wiki/ASCII) standard. The following shows the actual values (in hexadecimal) to represent the given string.
 
 ```
 T  h  e     q  u  i  c  k   
@@ -87,7 +87,7 @@ q        u        i        c        k
 b        r        o        w        n
 01100010 01110010 01101111 01110111 01101110 00100000
 f        o        x
-01100110 01101111 01111000 00100000
+01100110 01101111 01111000 
 ```
 
 Now, we convert each run according to our run-length encoding scheme.
@@ -105,9 +105,9 @@ T             h           e             []        q
 11 000 1 00 111 00 1 00 11 0 1111 0 111 0 111 0 11 0 111 000 1 000000
 => 010 011 001 010 011 010 001 010 010 001 100 001 011 001 011 001 010 001 011 011 001 110
 
-          o           x         []   
-11 00 11 00 11 0 1111 0 1111 00000 1 00000
-=> 010 010 010 010 010 001 100 001 100 101 001 110
+          o           x         
+11 00 11 00 11 0 1111 0 1111 000 
+=> 010 010 010 010 010 001 100 001 100 011
 ```
 
 The final output will be as follows.
@@ -131,11 +131,11 @@ T             h           e             []        q
 => 010 01100101 00110100 01010010 00110000 10110010 11001010 00101101 1001110
        0x65     0x34     0x52     0x30     0xb2     0xca     0x2d     0x9c
 
-          o           x         []   
-11 00 11 00 11 0 1111 0 1111 00000 1 00000
-=> 010 010 010 010 010 001 100 001 100 101 001 110
-=> 0 10010010 01001000 11000011 00101001 11000000 (5 bits padded)
-     0x92     0x48     0xc3     0x29     0xc0
+          o           x           
+11 00 11 00 11 0 1111 0 1111 000  
+=> 010 010 010 010 010 001 100 001 100 011 
+=> 0 10010010 01001000 11000011 00011000 (3 bits padded)
+     0x92     0x48     0xc3     0x18     
 ```
 
 
