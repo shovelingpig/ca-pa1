@@ -14,7 +14,7 @@ In this project, you need to perform a variant of run-length encoding to the giv
 
 Run-length encoding (RLE) is a form of lossless data compression in which runs of data (sequences in which the same data value occurs in many consecutive data elements) are stored as a single data value and count, rather than as the original run. This is most efficient on data that contains may such runs, for example simple graphic images such as icons, line drawings, and animations. For files that do not have may runs, RLE could increase the file size. For more details on RLE, please refer to https://en.wikipedia.org/wiki/Run-length_encoding.
 
-### Our Simplified Run-length Encoding
+## Our Simplified Run-length Encoding
 
 In memory, every data is represented as a sequence of binary digits. Therefore, we just count those runs that consist of all 0's or 1's. Because we have only two kinds of runs, we do not store the data value. Instead, we repeatedly store the length of the run with all 0's and then that with all 1's. We allocate three bits to represent the length of each run. Our simplified run-length encoding works as follows.
 
