@@ -16,7 +16,7 @@ Run-length encoding (RLE) is a form of lossless data compression in which runs o
 
 ## Our Simplified Run-length Encoding
 
-In memory, every data is represented as a sequence of binary digits. Therefore, we just count those runs that consist of all 0's or 1's. Because we have only two kinds of runs, we do not store the data value. Instead, we repeatedly store the length of the run with all 0's and then that with all 1's. We allocate three bits to represent the length of each run. Our simplified run-length encoding works as follows.
+In memory, every data is represented as a sequence of binary digits. Therefore, we just count those runs that consist of all 0's or all 1's. Because we have only two kinds of runs, we do not store the data value. Instead, we repeatedly store the length of the run with all 0's and then that with all 1's. We allocate three bits to represent the length of each run. Our simplified run-length encoding works as follows.
 
 1. First, find a run with all 0's in the input. If the length is less than 7, emit the three bits that correspond to the length of the run.
 
