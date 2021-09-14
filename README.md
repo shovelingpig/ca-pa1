@@ -8,9 +8,7 @@
 In this project, you need to perform a variant of run-length encoding to the given array of bytes in memory. The purpose of this project is to make you familiar with the binary representations of strings/integers and the logical operations supported in the C programming language. Another goal is to make your Linux or MacOS development environment ready and to get familiar with our project submission server.
 
 
-## Background
-
-### Run-length Encoding
+## Background: Run-length Encoding
 
 Run-length encoding (RLE) is a form of lossless data compression in which runs of data (sequences in which the same data value occurs in many consecutive data elements) are stored as a single data value and count, rather than as the original run. This is most efficient on data that contains may such runs, for example simple graphic images such as icons, line drawings, and animations. For files that do not have may runs, RLE could increase the file size. For more details on RLE, please refer to https://en.wikipedia.org/wiki/Run-length_encoding.
 
@@ -189,15 +187,19 @@ The result of a sample run looks like this:
 
 ```
 $ ./pa1
--------- TEST #0
+-------- TEST #0 Encoding
 [Input] length (bytes): 1
 11111111
 [Encode] length (bytes): 0
-[Answer] length (bytes): 3
+
+[Answer] length (bytes): 2
 000 111 000 001 000 0
-[Decode] length (bytes): 1
-00000000
--------- WRONG!
+-------- ENCODING WRONG! 2
+
+-------- TEST #0 Decoding
+[Decode] length (bytes): 0
+
+-------- DECODING WRONG! 2
 
 (... more test cases below ...)
 ```
@@ -206,9 +208,7 @@ $ ./pa1
 
 * You are not allowed to use any array even in the comment lines. Any source file that contains the symbol `[` or `]` will be rejected by the server. 
 
-* You are not allowed to use any library functions (including `printf()`) inside the `pa1.c` file. 
-
-* Do not include any header file other than `pa1.h` in the `pa1.c` file.
+* Do not include any header file in the `pa1.c` file. You are not allowed to use any library functions (including `printf()`) inside the `pa1.c` file. 
 
 * Your solution should finish within a reasonable time. If your code does not finish within a predefined threshold (e.g., 5 sec), it will be killed.
 
