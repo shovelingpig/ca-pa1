@@ -10,7 +10,7 @@ In this project, you need to perform a variant of run-length encoding to the giv
 
 ## Background: Run-length Encoding
 
-Run-length encoding (RLE) is a form of lossless data compression in which runs of data (sequences in which the same data value occurs in many consecutive data elements) are stored as a single data value and count, rather than as the original run. This is most efficient on data that contains may such runs, for example simple graphic images such as icons, line drawings, and animations. For files that do not have may runs, RLE could increase the file size. For more details on RLE, please refer to https://en.wikipedia.org/wiki/Run-length_encoding.
+Run-length encoding (RLE) is a form of lossless data compression in which runs of data (sequences in which the same data value occurs in many consecutive data elements) are stored as a single data value and count, rather than as the original run. This is most efficient on data that contains many such runs, for example simple graphic images such as icons, line drawings, and animations. For files that do not have many runs, RLE could increase the file size. For more details on RLE, please refer to https://en.wikipedia.org/wiki/Run-length_encoding.
 
 ## Our Simplified Run-length Encoding
 
@@ -53,13 +53,14 @@ Putting it all together, the final encoded value for the 8-bit input `0x00` beco
 
 
 ```
-111 000 001 0000000   == 0xe0 0x80
- ^   ^   ^  ^^^^^^^
- |   |   |     |
- |   |   |    padding (to make the output 8*n bits)
- |   |   the length of the next run with all 0's (1)
- |   the length of the next run with all 1's (0)
- the length of the first run with all 0's (7)
+Original value: 00000000
+Encoded value:  111 000 001 0000000   == 0xe0 0x80
+                 ^   ^   ^  ^^^^^^^
+                 |   |   |     |
+                 |   |   |    padding (to make the output 8*n bits)
+                 |   |   the length of the next run with all 0's (1)
+                 |   the length of the next run with all 1's (0)
+                 the length of the first run with all 0's (7)
 ```
 
 ### Example
